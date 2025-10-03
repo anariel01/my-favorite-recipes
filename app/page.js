@@ -1,37 +1,12 @@
-import Image from "next/image";
 import styles from "./page.module.css";
-import Link from "next/link";
+import RecipeList from "@/components/recipelist/RecipeList";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Мои рецепты</h1>
       <div className={styles.wrapper}>
-        <p className={styles.description}>Здесь пока пусто</p>
-        <p className={styles.description}>
-          Нажми{" "}
-          <svg
-            className={styles.svg}
-            xmlns="http://www.w3.org/2000/svg"
-            width="26"
-            height="23"
-            viewBox="0 0 36 33"
-            fill="none"
-          >
-            <g opacity="0.5" clipPath="url(#clip0_12_71)">
-              <path
-                d="M27 17.875H19.5V24.75C19.5 25.5063 18.825 26.125 18 26.125C17.175 26.125 16.5 25.5063 16.5 24.75V17.875H9C8.175 17.875 7.5 17.2563 7.5 16.5C7.5 15.7437 8.175 15.125 9 15.125H16.5V8.25C16.5 7.49375 17.175 6.875 18 6.875C18.825 6.875 19.5 7.49375 19.5 8.25V15.125H27C27.825 15.125 28.5 15.7437 28.5 16.5C28.5 17.2563 27.825 17.875 27 17.875Z"
-                fill="black"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_12_71">
-                <rect width="36" height="33" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-          , чтобы добавить <br /> свой первый рецепт
-        </p>
+        <RecipeList />
       </div>
     </div>
   );

@@ -3,20 +3,32 @@
 import resizeOnType from "@/helpers/resizeOnType";
 import styles from "./RecipeForm.module.css";
 import classNames from "classnames";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import saveRecipe from "@/helpers/saveRecipe";
+import { createRecipe } from "@/helpers/saveRecipe";
+import { categories } from "@/helpers/constants";
 
 export default function RecipeForm() {
   const formMethods = useForm();
   const { reset, handleSubmit, register } = formMethods;
-  const textareaRef = useRef(null);
+  const textareaDes = useRef(null);
+  const textareaIng = useRef(null);
   const { ref: rhfRef, ...descriptionProps } = register("description");
+  const { ref: ihfRef, ...ingredientsProps } = register("ingredients");
+
+  // const { saveRecipe } = useRecipeData();
 
   const onSubmit = (data) => {
+    createRecipe({
+      ...data,
+      id: Date.now(),
+    });
     reset();
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
+    if (textareaDes.current) {
+      textareaDes.current.style.height = "auto";
+    }
+    if (textareaIng.current) {
+      textareaIng.current.style.height = "auto";
     }
   };
 
@@ -35,23 +47,29 @@ export default function RecipeForm() {
           id="category-select"
           required
         >
-          <option value="uncategorized">Без категории</option>
-          <option value="breakfasts">Завтраки</option>
-          <option value="lunch">Обеды</option>
-          <option value="soup">Супы</option>
-          <option value="salads">Салаты</option>
-          <option value="desserts">Десерты</option>
-          <option value="drinks">Напитки</option>
+          {categories.map((category) => (
+            <option key={category.slug} value={category.slug}>
+              {category.title}
+            </option>
+          ))}
         </select>
         <input
           {...register("time")}
           className={styles.input}
           placeholder="Время приготовления"
         />
-        <input
-          {...register("ingredients")}
-          className={styles.input}
-          placeholder="Ингредиенты"
+        <textarea
+          {...ingredientsProps}
+          className={classNames(styles.input, styles.textarea)}
+          placeholder="после добавления ингредиента нажимайте enter, чтобы добавить следующий"
+          rows={3}
+          ref={(el) => {
+            ihfRef(el);
+            textareaIng.current = el;
+          }}
+          onChange={(e) => {
+            resizeOnType(e);
+          }}
           required
         />
         <textarea
@@ -61,7 +79,7 @@ export default function RecipeForm() {
           rows={3}
           ref={(el) => {
             rhfRef(el);
-            textareaRef.current = el;
+            textareaDes.current = el;
           }}
           onChange={(e) => {
             resizeOnType(e);

@@ -1,8 +1,15 @@
 .link {
   color: #000;
+  display: grid;
+  place-content: center;
+
+  --size: 60px;
+  width: var(--size);
+  height: var(--size);
 }
 
-/* .active {
+.active {
+
   border-radius: 50%;
-  fill: rgba(0, 180, 191, 0.25);
-} */
+  background-color: rgba(85, 138, 96, 0.25);
+}
